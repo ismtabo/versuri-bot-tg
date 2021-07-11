@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+
+  develenv:
+    build:
+      context: .
+      target: build
+    environment:
+      PRODUCT_VERSION: ${PRODUCT_VERSION:-0.0}
+      PRODUCT_REVISION: ${PRODUCT_REVISION:-0}
+      HOST_UID_GID: ${HOST_UID_GID:-}
+      DOCKER_HOST: ${DOCKER_HOST:-}
+    entrypoint: tail -f /dev/null
+    depends_on:
+      - server
+
+  server:
+    image: ${DOCKER_IMAGE:-server}
+    build:
+      context: .
+      args:
+        PRODUCT_VERSION: ${PRODUCT_VERSION:-0.0}
+        PRODUCT_REVISION: ${PRODUCT_REVISION:-0}
+    restart: always

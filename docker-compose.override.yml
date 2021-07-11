@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+    
+  develenv:
+    build:
+      target: develenv
+    environment:
+      GODOG_FORMAT: ${GODOG_FORMAT:-pretty}
+    volumes:
+      - .:/src
+
+  server:
+    ports:
+      - 8080:8080
